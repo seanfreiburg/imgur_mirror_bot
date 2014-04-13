@@ -17,7 +17,7 @@ def main
 
   for subreddit in SUBREDDITS
     puts subreddit
-    sleep(30)
+    sleep(2)
     response = reddit_client.get_listing({:subreddit => subreddit, :limit => 100})
 
     children_array = response["data"]["children"]
@@ -37,7 +37,7 @@ def main
             puts "http://reddit.com" + child["data"]["permalink"]
             new_image_url = response_hash["data"]["link"]
 
-            comment_text = "[Imgur Link](#{new_image_url})"
+            comment_text = "[Imgur Mirror](#{new_image_url})"
             puts child["data"]
             response = reddit_client.comment comment_text, id
             if response["json"]["ratelimit"]
