@@ -7,13 +7,14 @@ require 'json'
 
 PICTURE_EXTENSIONS = ['.jpg', '.png', '.gif']
 SUBREDDITS = ['aww', 'nsfw', 'funny', 'pics',
-              'AdviceAnimals', 'cringepics', 'WTF', 'all', 'trees',
+              'adviceAnimals', 'cringepics', 'wtf', 'all', 'trees',
               'gifs', 'tatoos', 'uiuc', 'pokemon', 'comics','gaming','news',
               'worldnews', 'books', 'EarthPorn', 'television', 'sports','nfl',
               'food', 'photoshopbattles','4chan','pcmasterrace','bitcoin',
-              'nba', 'gentlemanboners', 'DotA2','TrollXChromosomes',
-              'atheism', 'SquaredCircle', 'dogecoin', 'twitchplayspokemon',
-              'soccer', 'gameofthrones','nonononoyes' ].sort!
+              'nba', 'gentlemanboners', 'dotA2','trollXChromosomes',
+              'atheism', 'squaredCircle', 'dogecoin', 'twitchplayspokemon',
+              'soccer', 'gameofthrones','nonononoyes','mildlyinteresting',
+              'woahdude','fiftyfifty', 'foodporn','historyporn','wallpapers','cosplay','diy','android'].sort!
 #SUBREDDITS = ['aww','nsfw']
 
 def main
