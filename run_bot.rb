@@ -8,22 +8,22 @@ require 'json'
 PICTURE_EXTENSIONS = ['.jpg', '.png', '.gif']
 SUBREDDITS = ['aww', 'nsfw', 'funny', 'pics',
               'adviceAnimals', 'cringepics', 'wtf', 'all', 'trees',
-              'gifs', 'tatoos', 'uiuc', 'pokemon', 'comics','gaming','news',
-              'worldnews', 'books', 'EarthPorn', 'television', 'sports','nfl',
-              'food', 'photoshopbattles','4chan','pcmasterrace','bitcoin',
-              'nba', 'gentlemanboners', 'dotA2','trollXChromosomes',
+              'gifs', 'tatoos', 'uiuc', 'pokemon', 'comics', 'gaming', 'news',
+              'worldnews', 'books', 'television', 'sports', 'nfl',
+              'food', 'photoshopbattles', '4chan', 'pcmasterrace', 'bitcoin',
+              'nba', 'gentlemanboners', 'dotA2', 'trollXChromosomes',
               'atheism', 'squaredCircle', 'dogecoin', 'twitchplayspokemon',
-              'soccer', 'gameofthrones','nonononoyes','mildlyinteresting',
-              'woahdude','fiftyfifty', 'foodporn','historyporn','wallpapers','cosplay','diy','android'].sort!
+              'soccer', 'gameofthrones', 'nonononoyes', 'mildlyinteresting',
+              'woahdude', 'fiftyfifty', 'foodporn', 'historyporn', 'wallpapers', 'cosplay', 'diy', 'android',
+              'realgirls', 'gonewild'].sort!
 #SUBREDDITS = ['aww','nsfw']
 
 def main
-  reddit_client = Snoo::Client.new
-  reddit_client.log_in REDDIT_USERNAME, REDDIT_PASSWORD
-  imgur_client = Imgur3::Client.new
-  imgur_client.log_in IMGUR_CLIENT_ID
-
   for subreddit in SUBREDDITS
+    reddit_client = Snoo::Client.new
+    reddit_client.log_in REDDIT_USERNAME, REDDIT_PASSWORD
+    imgur_client = Imgur3::Client.new
+    imgur_client.log_in IMGUR_CLIENT_ID
     puts subreddit
     sleep(2)
     response = reddit_client.get_listing({:subreddit => subreddit, :limit => 100})
@@ -45,7 +45,7 @@ def main
             puts "http://reddit.com" + child["data"]["permalink"]
             new_image_url = imgur_response_hash["data"]["link"]
 
-            comment_text = "[Imgur Mirror](#{new_image_url})"
+            comment_text = "[Imgur Mirror](#{new_image_url}) \n\n *^^This ^^bot ^^finds ^^images ^^not ^^hosted ^^on ^^imgur ^^and ^^mirrors ^^them ^^on ^^imgur*"
             puts child["data"]
             reddit_response = reddit_client.comment comment_text, id
             if reddit_response["json"]["ratelimit"]
@@ -54,7 +54,10 @@ def main
               puts ""
               sleep reddit_response["json"]["ratelimit"]
             else
+              #success
               mark_as_commented id
+              puts "SUCCESS"
+              sleep(2)
             end
           elsif imgur_response_hash["data"]["error"] == "User request limit exceeded"
             puts "imgur rate limit exceeded"
@@ -65,6 +68,7 @@ def main
           end
         end
       end
+
     end
   end
   puts "taking a break"
