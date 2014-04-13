@@ -6,7 +6,7 @@
     <ignored path=".idea/workspace.xml" />
     <file path="/imgur3.rb" changelist="4fa340c2-40ec-49bf-a60b-598df96baa27" time="1397366959645" ignored="false" />
     <file path="/test_imgur_api.rb" changelist="4fa340c2-40ec-49bf-a60b-598df96baa27" time="1397367165676" ignored="false" />
-    <file path="/run_bot.rb" changelist="4fa340c2-40ec-49bf-a60b-598df96baa27" time="1397371498660" ignored="false" />
+    <file path="/run_bot.rb" changelist="4fa340c2-40ec-49bf-a60b-598df96baa27" time="1397373020159" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,25 +38,25 @@
       <file leaf-file-name="config.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="19" selection-start="19" selection-end="37" vertical-scroll-proportion="0.0">
+            <state line="4" column="48" selection-start="151" selection-end="151" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="run_bot.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="run_bot.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/run_bot.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="25" selection-start="1413" selection-end="1413" vertical-scroll-proportion="0.0">
+            <state line="41" column="26" selection-start="1594" selection-end="1594" vertical-scroll-proportion="0.6817043">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="comments.json" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="comments.json" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/comments.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="35" selection-start="35" selection-end="35" vertical-scroll-proportion="0.0">
+            <state line="0" column="17" selection-start="17" selection-end="17" vertical-scroll-proportion="-0.0">
               <folding />
             </state>
           </provider>
@@ -461,7 +461,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="19" selection-start="19" selection-end="37" vertical-scroll-proportion="0.0">
+        <state line="4" column="48" selection-start="151" selection-end="151" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/comments.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="17" selection-start="17" selection-end="17" vertical-scroll-proportion="-0.0">
           <folding />
         </state>
       </provider>
@@ -475,14 +482,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/run_bot.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="25" selection-start="1413" selection-end="1413" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/comments.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="35" selection-start="35" selection-end="35" vertical-scroll-proportion="-0.0">
+        <state line="41" column="26" selection-start="1594" selection-end="1594" vertical-scroll-proportion="0.6817043">
           <folding />
         </state>
       </provider>

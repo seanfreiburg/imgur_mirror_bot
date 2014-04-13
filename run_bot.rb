@@ -6,8 +6,8 @@ require 'json'
 
 
 PICTURE_EXTENSIONS = ['.jpg', '.png', '.gif']
+#SUBREDDITS = ['aww','nsfw','funny', 'pics', 'AdviceAnimals', 'cringepics', 'WTF']
 SUBREDDITS = ['aww','nsfw']
-
 
 def main
   reddit_client = Snoo::Client.new
@@ -18,8 +18,8 @@ def main
   for subreddit in SUBREDDITS
     response = reddit_client.get_listing({:subreddit => subreddit})
 
-
-    for child in response["data"]["children"]
+    children_array = response["data"]["children"]
+    for child in children_array
       image_url = nil
       extension = child["data"]["url"][-4..-1]
       image_url = child["data"]["url"] if PICTURE_EXTENSIONS.include? extension and not child["data"]["url"].include? "imgur"
@@ -36,8 +36,14 @@ def main
           comment_text = "[Imgur Link](#{new_image_url})"
           puts child["data"]
           response = reddit_client.comment comment_text, id
-          puts response["data"]
-          mark_as_commented id
+          puts response["json"]
+          if response["json"]["ratelimit"]
+            puts "sleeping #{response["json"]["ratelimit"]}"
+            children_array << child
+            sleep response["json"]["ratelimit"]
+          else
+            mark_as_commented id
+          end
         end
       end
     end
@@ -53,11 +59,14 @@ def mark_as_commented post_id
   json_hash = JSON.parse(File.open('comments.json','r').read)
   json_hash[post_id] = true
   File.open('comments.json','w+').write(JSON.generate(json_hash))
+  puts "marked #{post_id}"
 
 end
 
 
 
 main
+
+puts "done"
 
 
