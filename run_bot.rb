@@ -28,7 +28,7 @@ def main
     response = reddit_client.get_listing({:subreddit => subreddit, :limit => 100})
 
     children_array = response["data"]["children"]
-    if !children_array.nil?
+    unless children_array.nil?
       for child in children_array
         image_url = nil
         extension = child["data"]["url"][-4..-1]
@@ -80,7 +80,7 @@ def mark_as_commented post_id
   json_hash[post_id] = true
   file = File.open('comments.json', 'w+')
   file.write(JSON.generate(json_hash))
-  file.close()
+  file.close
   puts "marked #{post_id}"
 
 end
