@@ -6,7 +6,14 @@ require 'json'
 
 
 PICTURE_EXTENSIONS = ['.jpg', '.png', '.gif']
-SUBREDDITS = ['aww', 'nsfw', 'funny', 'pics', 'AdviceAnimals', 'cringepics', 'WTF', 'all', 'trees', 'gifs', 'tatoos', 'uiuc', 'pokemon', 'comics']
+SUBREDDITS = ['aww', 'nsfw', 'funny', 'pics',
+              'AdviceAnimals', 'cringepics', 'WTF', 'all', 'trees',
+              'gifs', 'tatoos', 'uiuc', 'pokemon', 'comics','gaming','news',
+              'worldnews', 'books', 'EarthPorn', 'television', 'sports','nfl',
+              'food', 'photoshopbattles','4chan','pcmasterrace','bitcoin',
+              'nba', 'gentlemanboners', 'DotA2','TrollXChromosomes',
+              'atheism', 'SquaredCircle', 'dogecoin', 'twitchplayspokemon',
+              'soccer', 'gameofthrones','nonononoyes' ].sort!
 #SUBREDDITS = ['aww','nsfw']
 
 def main
@@ -29,31 +36,38 @@ def main
         post_id = "t3_" + child["data"]["id"]
         if image_url && !already_commented(post_id)
           response = imgur_client.upload 'url', image_url
-          response_hash = JSON.parse(response)
-          puts response_hash
+          imgur_response_hash = JSON.parse(response)
+          puts imgur_response_hash
           id = "t3_" + child["data"]["id"]
-          if response_hash["status"] == 200
+          if imgur_response_hash["status"] == 200
             #now we need to post it as a comment
             puts "http://reddit.com" + child["data"]["permalink"]
-            new_image_url = response_hash["data"]["link"]
+            new_image_url = imgur_response_hash["data"]["link"]
 
             comment_text = "[Imgur Mirror](#{new_image_url})"
             puts child["data"]
-            response = reddit_client.comment comment_text, id
-            if response["json"]["ratelimit"]
-              puts "sleeping #{response["json"]["ratelimit"]}"
+            reddit_response = reddit_client.comment comment_text, id
+            if reddit_response["json"]["ratelimit"]
+              puts "reddit: sleeping #{reddit_response["json"]["ratelimit"]}"
               children_array << child
-              sleep response["json"]["ratelimit"]
+              puts ""
+              sleep reddit_response["json"]["ratelimit"]
             else
               mark_as_commented id
             end
-          else
+          elsif imgur_response_hash["data"]["error"] == "User request limit exceeded"
+            puts "imgur rate limit exceeded"
+            sleep(200)
+          elsif imgur_response_hash["data"]["error"] == "Animated GIF is larger than 2MB. Make the image smaller and then try uploading again."
+            puts "too big"
             mark_as_commented id
           end
         end
       end
     end
   end
+  puts "taking a break"
+  sleep(300)
 end
 
 def already_commented post_id
