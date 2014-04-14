@@ -31,11 +31,7 @@ module Imgur3
         image = file_str
       end
 
-
       uri = URI.parse(UPLOAD_URL)
-
-
-
       http = Net::HTTP.new(uri.host, uri.port)
 
       request = Net::HTTP::Post.new(uri.request_uri)
