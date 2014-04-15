@@ -8,10 +8,15 @@ require_relative 'imgur3/imgur3'
 require 'json'
 require 'gdbm'
 
+module JSON
+  def self.parse_nil(json)
+    JSON.parse(json) if json && json.length >= 2
+  end
+end
 
-def main type
+def main type, subreddits
 
-  for subreddit in SUBREDDITS
+  for subreddit in subreddits
     reddit_client = Snoo::Client.new
     reddit_client.log_in REDDIT_USERNAME, REDDIT_PASSWORD
     imgur_client = Imgur3::Client.new
@@ -33,7 +38,8 @@ def main type
         post_id = "t3_" + child["data"]["id"]
         if image_url && !already_commented?(post_id)
           imgur_response = imgur_client.upload 'url', image_url
-          imgur_response_hash = JSON.parse(imgur_response)
+          imgur_response_hash = JSON.parse_nil(imgur_response)
+          next if imgur_response_hash.nil?
           puts imgur_response_hash
           id = "t3_" + child["data"]["id"]
           if imgur_response_hash["status"] == 200
@@ -41,7 +47,7 @@ def main type
             puts "http://reddit.com" + child["data"]["permalink"]
             new_image_url = imgur_response_hash["data"]["link"]
 
-            comment_text = "[Imgur Mirror](#{new_image_url}) \n\n *^^This ^^bot ^^finds ^^images ^^not ^^hosted ^^on ^^imgur ^^and ^^mirrors ^^them ^^on ^^imgur*"
+            comment_text = "[Imgur Mirror](#{new_image_url}) \n\n *^^This ^^bot ^^finds ^^images ^^not ^^hosted ^^on ^^imgur ^^and ^^mirrors ^^them ^^on ^^imgur.*"
             puts child["data"]
             begin
               reddit_comment_response = reddit_client.comment comment_text, id
@@ -74,8 +80,6 @@ def main type
 
     end
   end
-  puts "taking a break"
-  sleep(300)
 end
 
 def already_commented? post_id
@@ -92,11 +96,18 @@ def mark_as_commented post_id
   puts "marked #{post_id}"
 end
 
-
-while true
-  main "hot"
-  main "new"
+begin
+  main "new", ["all"]
+  main "hot", SUBREDDITS
+  main "new", ["all"]
+  main "new", SUBREDDITS
+  main "new", ["all"]
+rescue StandardError
+  puts "Exception"
+  exit(1)
 end
+
+
 
 
 
